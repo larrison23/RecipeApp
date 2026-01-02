@@ -1,35 +1,50 @@
 package recipeapp;
 
-public class Ingredient {
+import java.util.Objects;
+
+public class Ingredient implements Comparable<Ingredient>{
     private final String name;
     private final Location loc;
 
     public Ingredient(String name, Location loc) {
-        throw new UnsupportedOperationException();
+        if (name == null || loc == null) {
+            throw new IllegalArgumentException();
+        }
+        this.name = name;
+        this.loc = loc;
     }
 
     public String getName() {
-        throw new UnsupportedOperationException();
+        return name;
     }
 
     public Location getLocation() {
-        throw new UnsupportedOperationException();
+        return loc;
     }
 
     @Override
     public boolean equals(Object o) {
-        throw new UnsupportedOperationException();
+        if (this == o) return true;
+
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Ingredient that = (Ingredient) o;
+
+        return name.equalsIgnoreCase(that.getName()) && loc == that.getLocation();
     }
 
     @Override
     public int hashCode() {
-        throw new UnsupportedOperationException();
+        return Objects.hash(name.toLowerCase(), loc);
     }
 
     @Override
     public String toString() {
-        throw new UnsupportedOperationException();
+        return name;
     }
 
-    
+    @Override
+    public int compareTo(Ingredient other) {
+        return this.name.compareToIgnoreCase(other.name);
+    }
 }

@@ -1,0 +1,69 @@
+package recipeapp;
+
+import java.text.DecimalFormat;
+
+public class RecipeIngredient {
+    private final Ingredient ingredient;
+
+    private double qty;
+    private final String unit;
+    private final boolean prep;
+    private final String prepNote;
+
+    public RecipeIngredient(Ingredient ingredient, double qty, String unit, String prepNote) {
+        if (qty < 0) {
+            throw new IllegalArgumentException("Quantity can't be negative");
+        }
+
+        if (ingredient == null) {
+            throw new IllegalArgumentException("Ingredient can't be null");
+        }
+
+        this.ingredient = ingredient;
+        this.qty = qty;
+        this.unit = unit;
+        this.prep = (prepNote != null);
+        this.prepNote = (prepNote == null) ? "" : prepNote;
+    }
+
+    public Ingredient getIngredient() {
+        return ingredient;
+    }
+    public double getQuantity() {
+        return qty;
+    }
+    public String getUnit() {
+        return unit;
+    }
+    public boolean getPrep() {
+        return prep;
+    }
+    public String getPrepNote() {
+        return prepNote;
+    }
+
+    public void setQuantity(double qty) {
+        this.qty = qty;
+    }
+
+    public void scale(double factor) {
+        if (factor < 0) {
+            throw new IllegalArgumentException("Factor can't be negative");
+        }
+
+        qty = qty * factor;
+    }
+
+    @Override
+    public String toString() {
+        DecimalFormat df = new DecimalFormat("0.##");
+
+        String result = String.format("%s: %s %s", ingredient.toString(), df.format(qty), unit);
+
+        if (prep) {
+            result += ", " + prepNote;
+        }
+
+        return result;
+    }
+}

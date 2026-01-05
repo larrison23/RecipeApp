@@ -1,34 +1,43 @@
 package recipeapp;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class Recipe {
     private String name;
-    private Map<Ingredient, RecipeIngredient> ingredientMap;
+    private List<RecipeIngredient> ingredients;
 
     public Recipe(String name) {
-        throw new UnsupportedOperationException();
+        this.name = name;
+        ingredients = new ArrayList<>();
     }
 
     public String getName() {
-        throw new UnsupportedOperationException();
+        return name;
     }
 
     public List<RecipeIngredient> getIngredients() {
-        throw new UnsupportedOperationException();
+        return ingredients;
     }
 
     public void addIngredient(Ingredient ingredient, double qty, String unit, String prepNote) {
-        throw new UnsupportedOperationException();
+        RecipeIngredient ri = new RecipeIngredient(ingredient, qty, unit, prepNote);
+        ingredients.add(ri);
     }
 
     public void scale(double factor) {
-        throw new UnsupportedOperationException();
+        for (RecipeIngredient ri : ingredients) {
+            ri.scale(factor);
+        }
     }
 
     @Override
     public String toString() {
-        throw new UnsupportedOperationException();
+        StringBuilder result = new StringBuilder();
+        for (RecipeIngredient ri : ingredients) {
+            result.append(ri).append("\n");
+        }
+
+        return result.toString();
     }
 }

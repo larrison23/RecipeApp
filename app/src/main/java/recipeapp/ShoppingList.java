@@ -14,7 +14,8 @@ public class ShoppingList {
         throw new UnsupportedOperationException();
     }
 
-    public string toString() {
+    @Override
+    public String toString() {
         throw new UnsupportedOperationException();
     }
 }

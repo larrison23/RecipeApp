@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Recipe {
-    private String name;
-    private List<RecipeIngredient> ingredients;
+    private final String name;
+    private final List<RecipeIngredient> ingredients;
 
     public Recipe(String name) {
         this.name = name;
@@ -33,7 +33,9 @@ public class Recipe {
 
     @Override
     public String toString() {
-        StringBuilder result = new StringBuilder();
+        StringBuilder result = new StringBuilder(name + "\n");
+
+
         for (RecipeIngredient ri : ingredients) {
             result.append(ri).append("\n");
         }

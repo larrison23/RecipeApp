@@ -2,13 +2,13 @@ package recipeapp;
 
 import java.text.DecimalFormat;
 
-public class RecipeIngredient {
+public class RecipeIngredient implements Comparable<RecipeIngredient>{
     private final Ingredient ingredient;
 
     private double qty;
     private final String unit;
     private final boolean prep;
-    private final String prepNote;
+    private String prepNote;
 
     public RecipeIngredient(Ingredient ingredient, double qty, String unit, String prepNote) {
         if (qty < 0) {
@@ -42,6 +42,10 @@ public class RecipeIngredient {
         return prepNote;
     }
 
+    public void setPrepNote(String prepNote) {
+        this.prepNote = prepNote;
+    }
+
     public void setQuantity(double qty) {
         this.qty = qty;
     }
@@ -52,6 +56,27 @@ public class RecipeIngredient {
         }
 
         qty = qty * factor;
+    }
+
+    @Override
+    public int compareTo(RecipeIngredient other) {
+        return this.ingredient.compareTo(other.getIngredient());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (o == null || getClass() != o.getClass()) return false;
+
+        RecipeIngredient that = (RecipeIngredient) o;
+
+        return this.ingredient.equals(that.getIngredient());
+    }
+
+    @Override
+    public int hashCode() {
+        return ingredient.hashCode();
     }
 
     @Override

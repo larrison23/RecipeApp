@@ -2,12 +2,16 @@ package recipeapp;
 
 public class Main {
     public static void main(String[] args) {
-        Recipe chicPic = makeChicPic();
+        ShoppingList sList = new ShoppingList();
 
-        System.out.println(chicPic);
+        sList.addRecipe(chicPic());
+        sList.addRecipe(bakedPasta());
+        sList.addRecipe(lemonPepChic());
+
+        System.out.print(sList.toString());
     }
 
-    private static Recipe makeChicPic() {
+    private static Recipe chicPic() {
         Recipe chicPic = new Recipe("Chicken Picatta");
 
         chicPic.addIngredient(new Ingredient("Boneless, Skinless, Chicken Thighs", Location.MEAT), 1, "pound", "cut into 1-inch cubes");

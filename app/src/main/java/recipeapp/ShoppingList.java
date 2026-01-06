@@ -19,6 +19,7 @@ public class ShoppingList {
                 RecipeIngredient cur = items.get(key);
                 double newQuantity = cur.getQuantity() + ri.getQuantity();
                 cur.setQuantity(newQuantity);
+                // TODO: Add prepNote append here
             } else {
                 RecipeIngredient val = new RecipeIngredient(key, ri.getQuantity(), ri.getUnit(), ri.getPrepNote());
                 items.put(key, val);
@@ -52,6 +53,7 @@ public class ShoppingList {
     @Override
     public String toString() {
         List<RecipeIngredient> ris = getSortedList();
+        // ? Somehow this is still printing out an extra comma after items with no prep
 
         StringBuilder output = new StringBuilder("--------SHOPPING LIST-------\n");
         Location cur = Location.BAKERY;

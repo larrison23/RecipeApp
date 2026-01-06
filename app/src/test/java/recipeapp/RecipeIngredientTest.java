@@ -54,6 +54,11 @@ class RecipeIngredientTest {
 
         assertTrue(result.contains("1 gallon"));
         assertTrue(result.contains("frozen"));
+        assertTrue(ri.getPrep());
+        
+        RecipeIngredient nullPrep = new RecipeIngredient(milk, 1, "gallon", null);
+        assertFalse(nullPrep.toString().contains(","));
+        assertFalse(nullPrep.getPrep());
     }
 
     @Test

@@ -7,7 +7,7 @@ public class RecipeIngredient implements Comparable<RecipeIngredient>{
 
     private double qty;
     private final String unit;
-    private final boolean prep;
+    private boolean prep;
     private String prepNote;
 
     public RecipeIngredient(Ingredient ingredient, double qty, String unit, String prepNote) {
@@ -44,6 +44,7 @@ public class RecipeIngredient implements Comparable<RecipeIngredient>{
 
     public void setPrepNote(String prepNote) {
         this.prepNote = prepNote;
+        this.prep = true;
     }
 
     public void setQuantity(double qty) {

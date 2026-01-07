@@ -45,6 +45,12 @@ public class Ingredient implements Comparable<Ingredient>{
 
     @Override
     public int compareTo(Ingredient other) {
+        int locationDiff = this.loc.getSortOrder() - other.getLocation().getSortOrder();
+
+        if (locationDiff != 0) {
+            return locationDiff;
+        }
+
         return this.name.compareToIgnoreCase(other.name);
     }
 }

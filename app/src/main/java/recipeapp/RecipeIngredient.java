@@ -22,8 +22,8 @@ public class RecipeIngredient implements Comparable<RecipeIngredient>{
         this.ingredient = ingredient;
         this.qty = qty;
         this.unit = unit;
-        this.prep = (prepNote != null);
         this.prepNote = (prepNote == null) ? "" : prepNote;
+        this.prep = (!this.prepNote.equals(""));
     }
 
     public Ingredient getIngredient() {

@@ -3,6 +3,8 @@ package recipeapp;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -70,5 +72,25 @@ class ShoppingListTest {
         assertEquals(onion, items.get(2).getIngredient());
         assertEquals(milk, items.get(1).getIngredient());
         assertEquals(bread, items.get(0).getIngredient());
+    }
+
+    @Test
+    void twoPrep() {
+        sList.addIngredient(onion, 1, "item", "diced");
+        sList.addIngredient(onion, 1, "item", "cubed");
+
+        List<RecipeIngredient> items = sList.getSortedList();
+
+        assertEquals(onion, items.get(0).getIngredient());
+        assertTrue(items.get(0).toString().contains(", diced, cubed"));
+
+        sList.clear();
+        sList.addIngredient(onion, 1, "item", "");
+        sList.addIngredient(onion, 1, "item", "diced");
+
+        assertEquals(onion, items.get(0).getIngredient());
+        assertFalse(items.get(0).toString().contains(", ,"));
+
+        assertFalse(sList.toString().contains(", ,"));
     }
 }

@@ -13,22 +13,7 @@ public class ShoppingList {
         if (recipe == null) return;
 
         for (RecipeIngredient ri : recipe.getIngredients()) {
-            Ingredient key = ri.getIngredient();
-
-            if (items.containsKey(key)) {
-                RecipeIngredient cur = items.get(key);
-                double newQuantity = cur.getQuantity() + ri.getQuantity();
-                cur.setQuantity(newQuantity);
-                
-                if (ri.getPrep()) {
-                    StringBuilder prep = new StringBuilder(cur.getPrepNote());
-                    prep.append(", ").append(ri.getPrepNote());
-                    cur.setPrepNote(prep.toString());
-                }
-            } else {
-                RecipeIngredient val = new RecipeIngredient(key, ri.getQuantity(), ri.getUnit(), ri.getPrepNote());
-                items.put(key, val);
-            }
+            addIngredient(ri.getIngredient(), ri.getQuantity(), ri.getUnit(), ri.getPrepNote());
         }
     }
 
@@ -38,15 +23,24 @@ public class ShoppingList {
             double newQuantity = cur.getQuantity() + qty;
             cur.setQuantity(newQuantity);
 
-            if (prepNote != null) {
-                StringBuilder prep = new StringBuilder(cur.getPrepNote());
-                prep.append(", ").append(prepNote);
-                cur.setPrepNote(prep.toString());
-            }
+            prepNote = (prepNote == null) ? "" : prepNote;
+
+            if (!prepNote.isEmpty()) {
+                String prep = cur.getPrepNote();
+                if (cur.getPrep()) {
+                    cur.setPrepNote(prep + ", " + prepNote);
+                } else {
+                    cur.setPrepNote(prepNote);
+                }
+            } 
         } else {
             RecipeIngredient ri = new RecipeIngredient(ingredient, qty, unit, prepNote);
             items.put(ingredient, ri);
         }
+    }
+
+    public void clear() {
+        items.clear();
     }
 
     public List<RecipeIngredient> getSortedList() {
@@ -58,7 +52,6 @@ public class ShoppingList {
     @Override
     public String toString() {
         List<RecipeIngredient> ris = getSortedList();
-        System.out.println(ris);
         // ? Somehow this is still printing out an extra comma after items with no prep
 
         StringBuilder output = new StringBuilder("--------SHOPPING LIST-------\n");

@@ -1,8 +1,23 @@
 package recipeapp;
 
-import java.text.DecimalFormat;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class RecipeIngredient implements Comparable<RecipeIngredient>{
+    private static final Map<Double, String> FRACTIONS = new LinkedHashMap<>();
+
+    static {
+        FRACTIONS.put(0.50, "1/2");
+        FRACTIONS.put(0.25, "1/4");
+        FRACTIONS.put(0.75, "3/4");
+        FRACTIONS.put(1.0/3.0, "1/3");
+        FRACTIONS.put(2.0/3.0, "2/3");
+        FRACTIONS.put(0.125, "1/8");
+        FRACTIONS.put(0.375, "3/8");
+        FRACTIONS.put(0.625, "5/8");
+        FRACTIONS.put(0.875, "7/8");
+    }
+
     private final Ingredient ingredient;
 
     private double qty;
@@ -59,6 +74,27 @@ public class RecipeIngredient implements Comparable<RecipeIngredient>{
         qty = qty * factor;
     }
 
+    private String formatQuantity(double q) {
+        int whole = (int) q;
+        double fraction = q - whole;
+        double tolerance = 0.01;
+
+        String fractionStr = "";
+
+        for (Map.Entry<Double, String> entry : FRACTIONS.entrySet()) {
+            if (Math.abs(fraction - entry.getKey()) < tolerance) {
+                fractionStr = entry.getValue();
+                break;
+            }
+        }
+
+       if (whole == 0 && !fractionStr.isEmpty()) return fractionStr;
+       if (whole > 0 && !fractionStr.isEmpty()) return whole + " " + fractionStr;
+       if (fraction < tolerance) return String.valueOf(whole);
+       
+       return String.format("%.2f", q);
+    }
+
     @Override
     public int compareTo(RecipeIngredient other) {
         return this.ingredient.compareTo(other.getIngredient());
@@ -82,9 +118,7 @@ public class RecipeIngredient implements Comparable<RecipeIngredient>{
 
     @Override
     public String toString() {
-        DecimalFormat df = new DecimalFormat("0.##");
-
-        String result = String.format("%s: %s %s", ingredient.toString(), df.format(qty), unit.format(qty));
+        String result = String.format("%s: %s %s", ingredient.toString(), formatQuantity(qty), unit.format(qty));
 
         if (prep) {
             result += ", " + prepNote;

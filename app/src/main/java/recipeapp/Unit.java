@@ -36,14 +36,21 @@ public enum Unit {
     }
 
     public double toBase(double quantity) {
-        throw new UnsupportedOperationException();
+        return quantity * this.factor;
     }
 
     public double fromBase(double baseQuantity) {
-        throw new UnsupportedOperationException();
+        return baseQuantity / this.factor;
     }
 
     public double convert(double quantity, Unit targetUnit) {
-        throw new UnsupportedOperationException();
+        if (this == targetUnit) return quantity;
+
+        if (this.type != targetUnit.type) {
+            throw new IllegalArgumentException("Type Mismatch");
+        }
+
+        double baseQty = this.toBase(quantity);
+        return targetUnit.fromBase(baseQty);
     }
 }

@@ -6,11 +6,11 @@ public class RecipeIngredient implements Comparable<RecipeIngredient>{
     private final Ingredient ingredient;
 
     private double qty;
-    private final String unit;
+    private Unit unit;
     private boolean prep;
     private String prepNote;
 
-    public RecipeIngredient(Ingredient ingredient, double qty, String unit, String prepNote) {
+    public RecipeIngredient(Ingredient ingredient, double qty, Unit unit, String prepNote) {
         if (qty < 0) {
             throw new IllegalArgumentException("Quantity can't be negative");
         }
@@ -32,7 +32,7 @@ public class RecipeIngredient implements Comparable<RecipeIngredient>{
     public double getQuantity() {
         return qty;
     }
-    public String getUnit() {
+    public Unit getUnit() {
         return unit;
     }
     public boolean getPrep() {
@@ -84,7 +84,7 @@ public class RecipeIngredient implements Comparable<RecipeIngredient>{
     public String toString() {
         DecimalFormat df = new DecimalFormat("0.##");
 
-        String result = String.format("%s: %s %s", ingredient.toString(), df.format(qty), unit);
+        String result = String.format("%s: %s %s", ingredient.toString(), df.format(qty), unit.getLabel());
 
         if (prep) {
             result += ", " + prepNote;

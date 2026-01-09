@@ -27,11 +27,11 @@ class ShoppingListTest {
     void mergeDups() {
         Recipe soup = new Recipe("Soup");
 
-        soup.addIngredient(onion, 1, "item", null);
+        soup.addIngredient(onion, 1, Unit.COUNT, null);
 
         Recipe salad = new Recipe("Salad");
 
-        salad.addIngredient(onion, 2, "item", null);
+        salad.addIngredient(onion, 2, Unit.COUNT, null);
 
         sList.addRecipe(soup);
         sList.addRecipe(salad);
@@ -47,11 +47,11 @@ class ShoppingListTest {
     void distinct() {
         Recipe soup = new Recipe("Soup");
 
-        soup.addIngredient(onion, 1, "item", null);
+        soup.addIngredient(onion, 1, Unit.COUNT, null);
 
         Recipe cereal = new Recipe("Cereal");
 
-        cereal.addIngredient(milk, 1, "gallon", null);
+        cereal.addIngredient(milk, 1, Unit.GALLON, null);
 
         sList.addRecipe(soup);
         sList.addRecipe(cereal);
@@ -63,9 +63,9 @@ class ShoppingListTest {
 
     @Test
     void sort() {
-        sList.addIngredient(onion, 1, "item", "diced");
-        sList.addIngredient(milk, 1, "gallon", null);
-        sList.addIngredient(bread, 1, "loaf", null);
+        sList.addIngredient(onion, 1, Unit.COUNT, "diced");
+        sList.addIngredient(milk, 1, Unit.GALLON, null);
+        sList.addIngredient(bread, 1, Unit.COUNT, null);
 
         List<RecipeIngredient> items = sList.getSortedList();
 
@@ -76,8 +76,8 @@ class ShoppingListTest {
 
     @Test
     void twoPrep() {
-        sList.addIngredient(onion, 1, "item", "diced");
-        sList.addIngredient(onion, 1, "item", "cubed");
+        sList.addIngredient(onion, 1, Unit.COUNT, "diced");
+        sList.addIngredient(onion, 1, Unit.COUNT, "cubed");
 
         List<RecipeIngredient> items = sList.getSortedList();
 
@@ -85,12 +85,34 @@ class ShoppingListTest {
         assertTrue(items.get(0).toString().contains(", diced, cubed"));
 
         sList.clear();
-        sList.addIngredient(onion, 1, "item", "");
-        sList.addIngredient(onion, 1, "item", "diced");
+        sList.addIngredient(onion, 1, Unit.COUNT, "");
+        sList.addIngredient(onion, 1, Unit.COUNT, "diced");
 
         assertEquals(onion, items.get(0).getIngredient());
         assertFalse(items.get(0).toString().contains(", ,"));
 
         assertFalse(sList.toString().contains(", ,"));
     }
+
+    @Test
+    void testMergeDifferentUnits() {
+        sList.addIngredient(milk, 1, Unit.QUART, "");
+        sList.addIngredient(milk, 2, Unit.CUP, "");
+
+        List<RecipeIngredient> result = sList.getSortedList();
+
+        assertEquals(1, result.size());
+        assertEquals(1.5, result.get(0).getQuantity());
+        assertEquals(Unit.QUART, result.get(0).getUnit());
+    }
+
+    @Test
+    void testIncompatible() {
+        sList.addIngredient(milk, 1, Unit.CUP, "");
+        sList.addIngredient(milk, 1, Unit.COUNT, "");
+
+        assertEquals(1, sList.getSortedList().get(0).getQuantity());
+    }
+
+    
 }

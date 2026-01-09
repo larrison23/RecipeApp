@@ -17,22 +17,28 @@ public class ShoppingList {
         }
     }
 
-    public void addIngredient(Ingredient ingredient, double qty, String unit, String prepNote) {
+    public void addIngredient(Ingredient ingredient, double qty, Unit unit, String prepNote) {
         if (items.containsKey(ingredient)) {
             RecipeIngredient cur = items.get(ingredient);
-            double newQuantity = cur.getQuantity() + qty;
-            cur.setQuantity(newQuantity);
+            try {
+                double convertQty = unit.convert(qty, cur.getUnit());
 
-            prepNote = (prepNote == null) ? "" : prepNote;
+                double newQuantity = cur.getQuantity() + convertQty;
+                cur.setQuantity(newQuantity);
 
-            if (!prepNote.isEmpty()) {
-                String prep = cur.getPrepNote();
-                if (cur.getPrep()) {
-                    cur.setPrepNote(prep + ", " + prepNote);
-                } else {
-                    cur.setPrepNote(prepNote);
+                prepNote = (prepNote == null) ? "" : prepNote;
+
+                if (!prepNote.isEmpty()) {
+                    String prep = cur.getPrepNote();
+                    if (cur.getPrep()) {
+                        cur.setPrepNote(prep + ", " + prepNote);
+                    } else {
+                        cur.setPrepNote(prepNote);
+                    }
                 }
-            } 
+            } catch (Exception e) {
+                System.err.println("Could not merge " + cur.getIngredient().getName() + ". " + e.getMessage());
+            }
         } else {
             RecipeIngredient ri = new RecipeIngredient(ingredient, qty, unit, prepNote);
             items.put(ingredient, ri);

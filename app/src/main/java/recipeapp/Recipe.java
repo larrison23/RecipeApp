@@ -20,7 +20,7 @@ public class Recipe {
         return ingredients;
     }
 
-    public void addIngredient(Ingredient ingredient, double qty, String unit, String prepNote) {
+    public void addIngredient(Ingredient ingredient, double qty, Unit unit, String prepNote) {
         RecipeIngredient ri = new RecipeIngredient(ingredient, qty, unit, prepNote);
         ingredients.add(ri);
     }

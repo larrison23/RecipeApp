@@ -17,18 +17,18 @@ class RecipeIngredientTest {
 
     @Test
     void testCreation() {
-        RecipeIngredient ri = new RecipeIngredient(milk, 1, "gallon", null);
+        RecipeIngredient ri = new RecipeIngredient(milk, 1, Unit.GALLON, null);
 
         assertEquals(milk, ri.getIngredient());
         assertEquals(1, ri.getQuantity());
-        assertEquals("gallon", ri.getUnit());
+        assertEquals(Unit.GALLON, ri.getUnit());
         assertFalse(ri.getPrep());
         assertEquals("", ri.getPrepNote());
     }
 
     @Test
     void testScale() {
-        RecipeIngredient ri = new RecipeIngredient(milk, 1, "gallon", null);
+        RecipeIngredient ri = new RecipeIngredient(milk, 1, Unit.GALLON, null);
 
         ri.scale(2);
 
@@ -37,7 +37,7 @@ class RecipeIngredientTest {
 
     @Test
     void testScaleToZero() {
-        RecipeIngredient ri = new RecipeIngredient(milk, 1, "gallon", null);
+        RecipeIngredient ri = new RecipeIngredient(milk, 1, Unit.GALLON, null);
 
         ri.scale(0);
 
@@ -46,33 +46,33 @@ class RecipeIngredientTest {
 
     @Test
     void testString() {
-        RecipeIngredient ri = new RecipeIngredient(milk, 1, "gallon", "frozen");
+        RecipeIngredient ri = new RecipeIngredient(milk, 1, Unit.GALLON, "frozen");
 
         String result = ri.toString();
 
         System.out.println(result);
 
-        assertTrue(result.contains("1 gallon"));
+        assertTrue(result.contains("1 gal"));
         assertTrue(result.contains("frozen"));
         assertTrue(ri.getPrep());
         
-        RecipeIngredient nullPrep = new RecipeIngredient(milk, 1, "gallon", null);
+        RecipeIngredient nullPrep = new RecipeIngredient(milk, 1, Unit.GALLON, null);
         assertFalse(nullPrep.toString().contains(","));
         assertFalse(nullPrep.getPrep());
     }
 
     @Test
     void testNull() {
-        RecipeIngredient ri = new RecipeIngredient(milk, 1, "gallon", null);
+        RecipeIngredient ri = new RecipeIngredient(milk, 1, Unit.GALLON, null);
 
         String result = ri.toString();
 
-        assertEquals("Milk: 1 gallon", result.trim());
+        assertEquals("Milk: 1 gal", result.trim());
         assertFalse(result.contains("null"));
     }
 
     @Test
     void testNegative() {
-        assertThrows(IllegalArgumentException.class, () -> new RecipeIngredient(milk, -1, "gallon", null));
+        assertThrows(IllegalArgumentException.class, () -> new RecipeIngredient(milk, -1, Unit.GALLON, null));
     }
 }

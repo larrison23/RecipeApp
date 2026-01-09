@@ -27,8 +27,8 @@ class RecipeTest {
 
     @Test
     void testAddIngredient() {
-        recipe.addIngredient(flour, 1, "cup", null);
-        recipe.addIngredient(milk, 1, "gallon", "whisked");
+        recipe.addIngredient(flour, 1, Unit.CUP, null);
+        recipe.addIngredient(milk, 1, Unit.GALLON, "whisked");
 
         assertEquals(2, recipe.getIngredients().size());
         assertEquals("Flour", recipe.getIngredients().get(0).getIngredient().getName());
@@ -36,8 +36,8 @@ class RecipeTest {
 
     @Test
     void testScale() {
-        recipe.addIngredient(flour, 1, "cup", null);
-        recipe.addIngredient(milk, 1, "gallon", "whisked");
+        recipe.addIngredient(flour, 1, Unit.CUP, null);
+        recipe.addIngredient(milk, 1, Unit.GALLON, "whisked");
 
         recipe.scale(2);
 
@@ -49,17 +49,17 @@ class RecipeTest {
 
     @Test
     void testNull() {
-        assertThrows(IllegalArgumentException.class, () -> {recipe.addIngredient(null, 1, "unit", null);});
+        assertThrows(IllegalArgumentException.class, () -> {recipe.addIngredient(null, 1, Unit.COUNT, null);});
     }
 
     @Test
     void testString() {
-        recipe.addIngredient(flour, 1, "cup", null);
-        recipe.addIngredient(milk, 1, "gallon", "whisked");
+        recipe.addIngredient(flour, 1, Unit.CUP, null);
+        recipe.addIngredient(milk, 1, Unit.GALLON, "whisked");
 
         System.err.println(recipe);
 
-        assertTrue(recipe.toString().contains("Milk: 1 gallon, whisked"));
+        assertTrue(recipe.toString().contains("Milk: 1 gal, whisked"));
         assertTrue(recipe.toString().contains("Flour: 1 cup"));
     }
 }

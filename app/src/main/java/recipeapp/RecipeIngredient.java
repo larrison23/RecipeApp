@@ -84,7 +84,7 @@ public class RecipeIngredient implements Comparable<RecipeIngredient>{
     public String toString() {
         DecimalFormat df = new DecimalFormat("0.##");
 
-        String result = String.format("%s: %s %s", ingredient.toString(), df.format(qty), unit.getLabel());
+        String result = String.format("%s: %s %s", ingredient.toString(), df.format(qty), unit.format(qty));
 
         if (prep) {
             result += ", " + prepNote;

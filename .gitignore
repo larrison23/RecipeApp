@@ -20,5 +20,8 @@ gradle-app.setting
 # JDT-specific (Eclipse Java Development Tools)
 .classpath
 
+# Ignore class files
+*.class
+
 # Ignore Gradle build output directory
 build

@@ -5,8 +5,17 @@ public class Main {
         ShoppingList sList = new ShoppingList();
 
         sList.addRecipe(chicPic());
-        sList.addRecipe(bakedPasta());
         sList.addRecipe(lemonPepChic());
+
+        // Lunch Ingredients
+        sList.addIngredient(new Ingredient("Tuna Salad", Location.MEAT), 1, Unit.COUNT, null);
+        sList.addIngredient(new Ingredient("Bread", Location.BAKERY), 1, Unit.COUNT, null);
+        sList.addIngredient(new Ingredient("Provolone Cheese", Location.DAIRY), 1, Unit.COUNT, null);
+        
+
+        // Snack Ingredients
+        sList.addIngredient(new Ingredient("Hummus", Location.PANTRY), 1, Unit.COUNT, null);
+
 
         System.out.print(sList.toString());
     }

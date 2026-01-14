@@ -61,7 +61,7 @@ public class ShoppingList {
         // ? Somehow this is still printing out an extra comma after items with no prep
 
         StringBuilder output = new StringBuilder("--------SHOPPING LIST-------\n");
-        Location cur = Location.BAKERY;
+        Location cur = null;
 
         for (RecipeIngredient ri : ris) {
             if (ri.getIngredient().getLocation() != cur) {

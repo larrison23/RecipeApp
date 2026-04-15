@@ -7,17 +7,21 @@ public class Main {
         sList.addRecipe(chicPic());
         sList.addRecipe(lemonPepChic());
 
-        // Lunch Ingredients
-        sList.addIngredient(new Ingredient("Tuna Salad", Location.MEAT), 1, Unit.COUNT, null);
-        sList.addIngredient(new Ingredient("Bread", Location.BAKERY), 1, Unit.COUNT, null);
-        sList.addIngredient(new Ingredient("Provolone Cheese", Location.DAIRY), 1, Unit.COUNT, null);
+        lunch(sList);
         
-
-        // Snack Ingredients
-        sList.addIngredient(new Ingredient("Hummus", Location.PANTRY), 1, Unit.COUNT, null);
-
+        snacks(sList);
 
         System.out.print(sList.toString());
+    }
+
+    private static void lunch(ShoppingList sList) {
+        sList.addIngredient(new Ingredient("Tuna Salad", Location.MEAT), 1, Unit.COUNT, null);
+        sList.addIngredient(new Ingredient("Farmhouse Hearty White", Location.BAKERY), 1, Unit.COUNT, null);
+        sList.addIngredient(new Ingredient("Provolone Cheese", Location.DAIRY), 1, Unit.COUNT, null);
+    }
+
+    private static void snacks(ShoppingList sList) {
+        sList.addIngredient(new Ingredient("Classic Hummus", Location.PANTRY), 1, Unit.COUNT, null);
     }
 
     private static Recipe chicPic() {
